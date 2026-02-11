@@ -1,9 +1,10 @@
 import { Component, Signal, signal } from '@angular/core';
 import { Product } from '../../models/product';
+import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
-  imports: [],
+  imports: [UpperCasePipe, CurrencyPipe],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })

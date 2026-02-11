@@ -5,10 +5,10 @@
 
 <ul class="products">
     @for (product of products(); track product.id) {
-        <li>
-            <span class="name">{{ product.name }}</span>
+        <li [class.discontinued]="product.discontinued">
+            <span class="name">{{ product.name | uppercase }}</span>
             <span class="description">{{ product.description }}</span>
-            <span class="price">{{ product.price }}</span>
+            <span class="price">{{ product.price | currency }}</span>
         </li>
     }
 </ul>
