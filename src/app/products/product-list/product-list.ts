@@ -17,6 +17,7 @@ export class ProductList {
   products: Signal<Product[]> = this.productService.getProducts()
   selectedProduct: WritableSignal<Product> = signal<Product>(undefined)
   isLoading: Signal<boolean> = this.productService.isLoading
+  errorMessage: Signal<string> = this.productService.errorMessage
 
   select(product: Product) {
     this.selectedProduct.set(product)
