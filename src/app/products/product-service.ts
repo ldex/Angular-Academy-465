@@ -9,12 +9,16 @@ export class ProductService {
 
   private apiService = inject(ApiService)
   private products = signal<Product[]>([])
+  private loading = signal<boolean>(false)
+  readonly isLoading = this.loading.asReadonly()
 
   private loadProducts() {
+    this.loading.set(true)
     this.apiService.loadProducts().subscribe({
       next: data => {
         this.products.set(data)
         console.table(data)
+        this.loading.set(false)
       }
     })
   }
