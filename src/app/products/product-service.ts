@@ -1,69 +1,27 @@
-import { Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
 import { Product } from '../models/product';
+import { ApiService } from '../api/api-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
 
+  private apiService = inject(ApiService)
+  private products = signal<Product[]>([])
+
+  private loadProducts() {
+    this.apiService.loadProducts().subscribe({
+      next: data => {
+        this.products.set(data)
+        console.table(data)
+      }
+    })
+  }
+
   getProducts(): Signal<Product[]> {
-    return signal([
-    {
-      id: 1,
-      name: 'Trek SSL 2026',
-      price: 1799.9,
-      description: 'Racing bike.',
-      discontinued: false,
-      fixedPrice: false,
-      imageUrl:
-        'https://raw.githubusercontent.com/ldex/angular-full-project/refs/heads/master/src/assets/images/trek.jpg',
-      modifiedDate: new Date(2026, 12, 8),
-    },
-    {
-      id: 2,
-      name: 'City XT 2025',
-      price: 1659.5,
-      description: 'City bike.',
-      discontinued: true,
-      fixedPrice: false,
-      imageUrl:
-        'https://raw.githubusercontent.com/ldex/angular-full-project/refs/heads/master/src/assets/images/city.jpg',
-      modifiedDate: new Date(2025, 1, 12),
-    },
-    {
-      id: 3,
-      name: 'Cosmic Cobat 2025',
-      price: 1499.9,
-      description: 'Great bike.',
-      discontinued: false,
-      fixedPrice: false,
-      imageUrl:
-        'https://raw.githubusercontent.com/ldex/angular-full-project/refs/heads/master/src/assets/images/cosmic-cobat.jpg',
-      modifiedDate: new Date(2025, 1, 2),
-    },
-    {
-      id: 4,
-      name: 'Hero DTB 2025',
-      price: 1759,
-      description: "Champion's bike.",
-      discontinued: true,
-      fixedPrice: true,
-      imageUrl:
-        'https://raw.githubusercontent.com/ldex/angular-full-project/refs/heads/master/src/assets/images/hero-dtb.jpg',
-      modifiedDate: new Date(2025, 1, 24),
-    },
-    {
-      id: 5,
-      name: 'S-WORKS 2026',
-      price: 1999.9,
-      description: 'Ultra bike.',
-      discontinued: false,
-      fixedPrice: false,
-      imageUrl:
-        'https://raw.githubusercontent.com/ldex/angular-full-project/refs/heads/master/src/assets/images/s-works.jpg',
-      modifiedDate: new Date(2026, 1, 19),
-    },
-  ]);
+    this.loadProducts()
+    return this.products.asReadonly()
   }
 
 }
