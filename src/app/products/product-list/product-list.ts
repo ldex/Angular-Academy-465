@@ -1,12 +1,13 @@
 import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { Product } from '../../models/product';
-import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import { CurrencyPipe, JsonPipe, UpperCasePipe } from '@angular/common';
 import { ProductDetails } from "../product-details/product-details";
 import { ProductService } from '../product-service';
+import { OrderByPipe } from '../orderBy.pipe';
 
 @Component({
   selector: 'app-product-list',
-  imports: [UpperCasePipe, CurrencyPipe, ProductDetails],
+  imports: [UpperCasePipe, CurrencyPipe, JsonPipe, OrderByPipe, ProductDetails],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })

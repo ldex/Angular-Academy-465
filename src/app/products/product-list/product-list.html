@@ -2,16 +2,21 @@
     {{ title() }}
 </h2>
 
+<div>
+    {{ products().length }} products
+</div>
+
 @if (errorMessage(); as errorMessage) {
     <div class="errorMessage">{{ errorMessage }}</div>
 } @else if (isLoading()) {
     <div class="loading"></div>
 } @else {
     <ul class="products">
-        @for (product of products(); track product.id) {
+        @for (product of products() | orderBy:['-modifiedDate']; track product.id) {
             <li [class.discontinued]="product.discontinued"
                 [class.selected]="selectedProduct() == product"
-                (click)="select(product)">
+                (click)="select(product)"
+                [title]="product | json">
                 <span class="name">{{ product.name | uppercase }}</span>
                 <span class="description">{{ product.description }}</span>
                 <span class="price">{{ product.price | currency:'CAD':'symbol-narrow':'.2' }}</span>
