@@ -29,6 +29,4 @@
         Page {{ pageNumber() }}
         <button (click)="changePage(1)" [disabled]="products().length <= end()">Next Page</button>
     </div>
-
-    <app-product-details [product]="selectedProduct()"></app-product-details>
 }

@@ -15,4 +15,8 @@ export class ApiService {
     return this.http.get<Product[]>(this.baseUrl).pipe(delay(1500)) // for the demo!
   }
 
+  loadProduct(id: number): Observable<Product> {
+    return this.http.get<Product>(this.baseUrl + id).pipe(delay(800))
+  }
+
 }

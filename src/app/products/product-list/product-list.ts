@@ -1,18 +1,19 @@
 import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { Product } from '../../models/product';
 import { CurrencyPipe, JsonPipe, SlicePipe, UpperCasePipe } from '@angular/common';
-import { ProductDetails } from "../product-details/product-details";
 import { ProductService } from '../product-service';
 import { OrderByPipe } from '../orderBy.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
-  imports: [UpperCasePipe, CurrencyPipe, JsonPipe, OrderByPipe, SlicePipe, ProductDetails],
+  imports: [UpperCasePipe, CurrencyPipe, JsonPipe, OrderByPipe, SlicePipe],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
 export class ProductList {
   private productService = inject(ProductService)
+  private router = inject(Router)
 
   title: Signal<string> = signal('Products')
   products: Signal<Product[]> = this.productService.getProducts()
@@ -34,5 +35,6 @@ export class ProductList {
 
   select(product: Product) {
     this.selectedProduct.set(product)
+    this.router.navigate(['/products', product.id])
   }
 }

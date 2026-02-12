@@ -1,6 +1,7 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, inject, input, InputSignal, Signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
+import { ProductService } from '../product-service';
 
 @Component({
   selector: 'app-product-details',
@@ -10,6 +11,15 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 })
 export class ProductDetails {
 
-  product: InputSignal<Product> = input<Product>()
+  private productService = inject(ProductService)
 
+  id = input.required<number>()
+  isLoading = this.productService.isLoading
+  errorMessage = this.productService.errorMessage
+
+  product: Signal<Product>
+
+  ngOnInit() {
+    this.product = this.productService.getProductById(this.id())
+  }
 }

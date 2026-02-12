@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ProductService {
   private apiService = inject(ApiService)
   private products = signal<Product[]>([])
+  private selectedProduct = signal<Product>(undefined)
 
   private loading = signal<boolean>(false)
   readonly isLoading = this.loading.asReadonly()
@@ -32,6 +33,29 @@ export class ProductService {
     if(this.products().length == 0)
       this.loadProducts()
     return this.products.asReadonly()
+  }
+
+  getProductById(id: number): Signal<Product> {
+    const product = this.products().find((p) => p.id === id);
+
+    if (!product) {
+      this.loadProduct(id);
+    } else {
+      this.selectedProduct.set(product);
+    }
+
+    return this.selectedProduct.asReadonly();
+  }
+
+  private loadProduct(id: number): void {
+    this.loading.set(true);
+    this.apiService.loadProduct(id).subscribe({
+      next: (product) => {
+        this.loading.set(false);
+        this.selectedProduct.set(product);
+      },
+      error: (err) => this.handleError(err, 'Failed to load product.'),
+    });
   }
 
   private handleError(httpError: HttpErrorResponse, userMessage: string) {
