@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         </div>
     `,
 })
-export class Contact {
+export default class Contact {
     constructor() { }
 
 }

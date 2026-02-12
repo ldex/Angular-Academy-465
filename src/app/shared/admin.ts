@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
         </div>
     `,
 })
-export class Admin {
+export default class Admin {
     constructor() { }
 
 }
