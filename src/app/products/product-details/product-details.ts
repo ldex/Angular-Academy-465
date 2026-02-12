@@ -22,4 +22,8 @@ export class ProductDetails {
   ngOnInit() {
     this.product = this.productService.getProductById(this.id())
   }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.id())
+  }
 }

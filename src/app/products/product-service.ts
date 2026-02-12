@@ -2,12 +2,15 @@ import { inject, Injectable, Signal, signal } from '@angular/core';
 import { Product } from '../models/product';
 import { ApiService } from '../api/api-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private apiService = inject(ApiService)
+  private router = inject(Router)
+
   private products = signal<Product[]>([])
   private selectedProduct = signal<Product>(undefined)
 
@@ -41,6 +44,17 @@ export class ProductService {
       },
     });
     return Promise.resolve();
+  }
+
+  deleteProduct(id: number) {
+    this.apiService.deleteProduct(id).subscribe({
+      next: () => {
+        this.products.update(products => products.filter(p => p.id !== id));
+        console.log('Product deleted');
+        this.router.navigateByUrl('/products');
+      },
+      error: (error) => this.handleError(error, 'Failed to delete product.')
+    });
   }
 
   getProducts(): Signal<Product[]> {

@@ -23,4 +23,8 @@ export class ApiService {
     return this.http.post<Product>(this.baseUrl, product)
   }
 
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + id)
+  }
+
 }
