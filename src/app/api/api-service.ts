@@ -19,4 +19,8 @@ export class ApiService {
     return this.http.get<Product>(this.baseUrl + id).pipe(delay(800))
   }
 
+  createProduct(product: Omit<Product, 'id'>): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, product)
+  }
+
 }
