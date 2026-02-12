@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { Product } from '../../models/product';
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 
@@ -10,6 +10,6 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 })
 export class ProductDetails {
 
-  product = input<Product>()
+  product: InputSignal<Product> = input<Product>()
 
 }
