@@ -29,7 +29,8 @@ export class ProductService {
   }
 
   getProducts(): Signal<Product[]> {
-    this.loadProducts()
+    if(this.products().length == 0)
+      this.loadProducts()
     return this.products.asReadonly()
   }
 
